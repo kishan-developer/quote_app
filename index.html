@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Quate-Generator</title>
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <style>
+            * {
+                  margin: 0;
+                  padding: 0;
+                  box-sizing: border-box;
+            }
+
+            body {
+                  color: rgb(149, 148, 145);
+                  width: 100vw;
+                  background-color: rgb(249, 162, 1);
+            }
+            .container {
+                  width: 100vw;
+                  height: auto;
+                  display: flex;
+                  justify-content: center;
+                  margin-top: 20px;
+
+
+
+            }
+
+            .quote-box {
+                  width: 60vw;
+                  text-align: center;
+                  background-color: #fff;
+                  color: #212121;
+                  
+                  /* padding: 50px; */
+                  padding-bottom: 20px;
+                  border-radius: 10px;
+                  cursor: pointer;
+
+            }
+
+            #quote {
+                  
+                  height: 300px;
+                  margin: 20px;
+                  font-size: 2vw;
+            }
+
+
+            .authorNamae {
+                  width: 100%;
+                  text-align: center;
+                  font-size: 1.5rem;
+                  padding: 3px 10px 3px 10px;
+                  color: red;
+                  margin-bottom: 20px;
+            }
+
+            
+            .buttons{
+                  width: 100%;
+                  display: flex;
+                  /* background-color: tomato; */
+                  justify-content: center;
+            }
+            button {
+                  border-radius: 10px;
+                  font: size 1.5rem;
+                  cursor: pointer;
+                  padding: 5px 20px 5px 20px;
+                  background-color: rgb(39, 11, 222);
+                  color: rgb(249, 246, 246);
+                  margin-left: 10px;
+            }
+
+            @media screen and (max-width: 580px) {
+                 body{
+                  width: 100%;
+                  padding: 0;
+                  margin: 0;
+                 }
+                 
+                  .container{ 
+                        width: 100%;
+                        
+                  }
+                  .quote-box{
+                        margin: 5px;
+                        width: 100%;
+                        height:90%;
+                        display: block;
+                        padding: 0;
+                        padding-bottom: 20px;
+                  }
+
+                  #quote{
+                        padding: 5px;
+                        width: 100%;
+                        margin: 0;
+                        font-size:20px;
+                        
+                  }
+                  .authorNamae{
+                        font-size:1.2rem ;
+                  }
+            }
+      </style>
+
+
+</head>
+
+<body>
+    
+      <div class="container">
+
+            <div class="quote-box">
+                  <h1>Quotes</h1>
+                  <p id="quote">"Click to show some Quotes"</p>
+                  <div class="authorNamae">
+                        <span class="name_heading">Author Name : </span>
+                        <span id="author"></span>
+                  </div>
+                  <div class="buttons">
+                        <button id="btn">Next</button>
+                        <button id="speak btn">Speak</button>
+                        <button id="btn" onclick="tweet()">Twitter</button>
+                  </div>
+            </div>
+      </div>
+
+
+
+
+      <script>
+
+            const quote = document.querySelector('#quote');
+
+            const author = document.querySelector('#author');
+
+            const button = document.querySelector('#btn');
+
+
+
+
+            button.addEventListener("click", getQuote); // getQuote is a call backfuction as a reference
+
+            function getQuote() {
+
+                  // fetch  function api add parameter me leta hai 
+                  fetch("https://api.quotable.io/random")
+                        .then(res => res.json())
+                        .then(data => {
+                              quote.innerHTML = `"${data.content}"`;
+
+                              author.innerHTML = ` ${data.author}.....`;
+                        })
+            }
+
+            // send the quote on your tweeter
+
+            function tweet() {
+                  // click tweet button open new window and run this url
+                  window.open("https://twitter.com/intent/tweet?text=" + quote.innerHTML + "---by " + author.innerHTML, "Tweet window", "width=600", "height=500")
+            }
+
+
+            // add quote reading feature
+            // select speak button and add click event 
+            const speak = document.querySelector('#speak').addEventListener("click", () => {
+                  const msg = quote.innerHTML;
+                  let uterance = new SpeechSynthesisUtterance(msg);
+                  speechSynthesis.speak(uterance);
+
+            });
+
+
+            // copy show quote only click copy button
+            // take a quit box where is show quote 
+            // and take a copy button
+
+            // const copyText = document.querySelector('#copy');
+
+            // creat a fun
+            // copyText.addEventListener('click', () => {
+            //       // take a quote box
+            //       // using select method select all text inside the quote variable/box
+            //       quote.select();
+            //       document.execCommand("copy");
+            // })
+
+      </script>
+
+
+</body>
+
+</html>
